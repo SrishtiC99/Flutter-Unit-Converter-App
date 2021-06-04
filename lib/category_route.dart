@@ -5,7 +5,7 @@ import 'package:flutter_udacity1/unit_converter.dart';
 class CategoryRoute extends StatefulWidget{
   CategoryRoute();
   static const _categoryNames = <String>["Length",
-  "Area", "Volume", "Mass", "Time", "Digital Storage", "Energy", "Currency"];
+    "Area", "Volume", "Mass", "Time", "Digital Storage", "Energy", "Currency"];
 
   static const _colors = <Color>[
     Colors.teal,
@@ -28,7 +28,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
 
     final listView = Container(
         child: ListView.builder(
-          itemCount: CategoryRoute._colors.length,
+            itemCount: CategoryRoute._colors.length,
             padding: EdgeInsets.all(8),
             itemBuilder: (BuildContext context, int index){
               return Category(CategoryRoute._categoryNames[index], CategoryRoute._colors[index], Icons.cake);
