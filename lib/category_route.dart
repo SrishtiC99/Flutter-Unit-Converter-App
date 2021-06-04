@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_udacity1/category.dart';
 import 'package:flutter_udacity1/unit_converter.dart';
 
-class CategoryRoute extends StatelessWidget{
+class CategoryRoute extends StatefulWidget{
   CategoryRoute();
   static const _categoryNames = <String>["Length",
   "Area", "Volume", "Mass", "Time", "Digital Storage", "Energy", "Currency"];
@@ -19,14 +19,19 @@ class CategoryRoute extends StatelessWidget{
   ];
 
   @override
+  _CategoryRouteState createState() => _CategoryRouteState();
+}
+
+class _CategoryRouteState extends State<CategoryRoute> {
+  @override
   Widget build(BuildContext context) {
-    
+
     final listView = Container(
         child: ListView.builder(
-          itemCount: _colors.length,
+          itemCount: CategoryRoute._colors.length,
             padding: EdgeInsets.all(8),
             itemBuilder: (BuildContext context, int index){
-              return Category(_categoryNames[index], _colors[index], Icons.cake);
+              return Category(CategoryRoute._categoryNames[index], CategoryRoute._colors[index], Icons.cake);
             }
         )
     );
@@ -46,5 +51,4 @@ class CategoryRoute extends StatelessWidget{
       body: listView,
     );
   }
-
 }
