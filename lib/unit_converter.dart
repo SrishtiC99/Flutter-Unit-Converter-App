@@ -107,10 +107,10 @@ class _ConverterRouteState extends State<ConverterRoute> {
   void _updateFromConversion(dynamic unitName) {
     setState(() {
       _fromValue = _getUnit(unitName);
+      if (_inputValue != null) {
+        _updateConversion();
+      }
     });
-    if (_inputValue != null) {
-      _updateConversion();
-    }
   }
 
   void _updateToConversion(dynamic unitName) {
@@ -182,6 +182,7 @@ class _ConverterRouteState extends State<ConverterRoute> {
             // are also other keyboards for dates, emails, phone numbers, etc.
             keyboardType: TextInputType.number,
             onChanged: _updateInputValue,
+            autofocus: true,
           ),
           _createDropdown(_fromValue.name, _updateFromConversion),
         ],

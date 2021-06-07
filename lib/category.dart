@@ -10,24 +10,13 @@ class Category extends StatelessWidget{
   final String categoryName;
   final Color color;
   final IconData iconData;
-  Category(this.categoryName, this.color, this.iconData);
-
-  /// Returns a list of mock [Unit]s.
-  List<Unit> _retrieveUnitList(String categoryName) {
-    return List.generate(10, (int i) {
-      i += 1;
-      return Unit(
-        name: '$categoryName Unit $i',
-        conversion: i.toDouble(),
-      );
-    });
-  }
-
+  final List<Unit> units;
+  Category(this.categoryName, this.color, this.iconData, this.units);
 
   void _navigateToUnitConverter(BuildContext context){
     Navigator.push(context,
       MaterialPageRoute(builder: (context) =>
-          ConverterRoute(categoryName, color, _retrieveUnitList(categoryName))
+          ConverterRoute(categoryName, color, units)
       )
     );
   }

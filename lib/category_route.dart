@@ -1,21 +1,14 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'unit.dart';
 import 'category.dart';
 import 'unit_converter.dart';
 
 class CategoryRoute extends StatefulWidget {
   CategoryRoute();
 
-  static const _categoryNames = <String>[
-    "Length",
-    "Area",
-    "Volume",
-    "Mass",
-    "Time",
-    "Digital Storage",
-    "Energy",
-    "Currency"
-  ];
   static const _colors = <Color>[
     Colors.teal,
     Colors.orange,
@@ -32,21 +25,45 @@ class CategoryRoute extends StatefulWidget {
 }
 
 class _CategoryRouteState extends State<CategoryRoute> {
-  late List<Category> _categoryList = [];
+  final _categoryList = <Category>[];
 
-  @override
-  void initState() {
-    super.initState();
-    for (var i = 0; i < CategoryRoute._categoryNames.length; i++) {
-      _categoryList.add(new Category(CategoryRoute._categoryNames[i],
-          CategoryRoute._colors[i], Icons.cake));
+    @override
+    Future<void> didChangeDependencies() async {
+     super.didChangeDependencies();
+     // We have static unit conversions located in our
+     // assets/data/regular_units.json
+     if (_categoryList.isEmpty) {
+       await _retrieveLocalCategories();
+      }
     }
+
+  /// Retrieves a list of [Categories] and their [Unit]s
+  Future<void> _retrieveLocalCategories() async {
+    final json = DefaultAssetBundle
+        .of(context)
+        .loadString('assets/data/regular_units.json');
+    final data = JsonDecoder().convert(await json);
+    if (data is! Map) {
+      throw ('Data retrieved from API is not a Map');
+    }
+    // Create Categories and their list of Units, from the JSON asset
+    var categoryIndex = 0;
+    data.keys.forEach((key) {
+      final List<Unit> units =
+      data[key].map<Unit>((dynamic data) => Unit.fromJson(data)).toList();
+
+      var category = Category(key, CategoryRoute._colors[categoryIndex], Icons.cake,units);
+      setState(() {
+        _categoryList.add(category);
+      });
+      categoryIndex += 1;
+    });
   }
 
   _getCategoryWidget(Orientation deviceOrientation){
     if (deviceOrientation == Orientation.portrait) {
       return ListView.builder(
-        itemCount: CategoryRoute._colors.length,
+        itemCount: _categoryList.length,
         padding: EdgeInsets.all(8),
         itemBuilder: (BuildContext context, int index) {
         return _categoryList[index];
@@ -54,7 +71,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
       );
     } else if (deviceOrientation == Orientation.landscape) {
       return GridView.builder(
-          itemCount: CategoryRoute._colors.length,
+          itemCount: _categoryList.length,
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
