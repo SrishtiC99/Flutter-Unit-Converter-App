@@ -9,7 +9,8 @@ class Category extends StatelessWidget{
 
   final String categoryName;
   final Color color;
-  final IconData iconData;
+  // Change this to a String path to the image asset
+  final String iconData;
   final List<Unit> units;
   Category(this.categoryName, this.color, this.iconData, this.units);
 
@@ -37,10 +38,7 @@ class Category extends StatelessWidget{
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Icon(
-                iconData,
-                size: _iconSize,
-              ),
+              child: Image.asset(iconData),
             ),
             Text(
               categoryName,

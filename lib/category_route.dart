@@ -26,8 +26,20 @@ class CategoryRoute extends StatefulWidget {
 
 class _CategoryRouteState extends State<CategoryRoute> {
   final _categoryList = <Category>[];
+  // Add image asset paths here
+  static const _icons = <String>[
+    'assets/icons/length.png',
+    'assets/icons/area.png',
+    'assets/icons/volume.png',
+    'assets/icons/mass.png',
+    'assets/icons/time.png',
+    'assets/icons/digital_storage.png',
+    'assets/icons/power.png',
+    'assets/icons/currency.png',
+  ];
 
-    @override
+
+  @override
     Future<void> didChangeDependencies() async {
      super.didChangeDependencies();
      // We have static unit conversions located in our
@@ -52,7 +64,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
       final List<Unit> units =
       data[key].map<Unit>((dynamic data) => Unit.fromJson(data)).toList();
 
-      var category = Category(key, CategoryRoute._colors[categoryIndex], Icons.cake,units);
+      var category = Category(key, CategoryRoute._colors[categoryIndex], _icons[categoryIndex],units);
       setState(() {
         _categoryList.add(category);
       });
