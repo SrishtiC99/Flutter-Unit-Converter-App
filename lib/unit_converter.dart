@@ -217,15 +217,12 @@ class _ConverterRouteState extends State<ConverterRoute> {
         ],
       ),
     );
-    final converterWidget = SingleChildScrollView(
-         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            inputWidget,
-            arrowWidget,
-            outputWidget
-          ],
-        )
+    final converterWidget = ListView(
+        children: [
+          inputWidget,
+          arrowWidget,
+          outputWidget
+        ],
     );
     final appBar = AppBar(
       title: Text(widget.categoryName,
@@ -235,6 +232,7 @@ class _ConverterRouteState extends State<ConverterRoute> {
       elevation: 0.0,
       backgroundColor: widget.color,
     );
+
     return Material(
       child: Scaffold(
           appBar: appBar,
